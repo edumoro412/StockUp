@@ -1,0 +1,42 @@
+header {
+  height: 6em;
+  background-color: var(--c-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1em; // un poco de padding lateral, opcional
+
+  .header__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+
+    &--logo {
+      height: 5em;
+      padding-top: 1em;
+    }
+
+    &--title {
+      color: #aed333;
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+  }
+
+  .header__icons {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    &--icons {
+      height: 2em;
+      width: 2em;
+      cursor: pointer;
+      transition: stroke 0.2s;
+
+      &:hover {
+        stroke: #fff;
+      }
+    }
+  }
+}
