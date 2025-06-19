@@ -8,16 +8,8 @@ import { Html5Qrcode } from 'html5-qrcode';
   templateUrl: './scanner.html',
   styleUrl: './scanner.scss',
 })
-export class Scanner implements OnInit, OnDestroy {
+export class Scanner {
   private html5QrCode!: Html5Qrcode;
-
-  ngOnInit(): void {
-    this.startScanner();
-  }
-
-  ngOnDestroy(): void {
-    this.html5QrCode?.stop().catch((err) => console.log(err));
-  }
 
   startScanner(): void {
     const config = {
