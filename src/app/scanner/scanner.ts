@@ -10,6 +10,7 @@ import { Html5Qrcode } from 'html5-qrcode';
 })
 export class Scanner {
   private html5QrCode!: Html5Qrcode;
+  productInfo: Product | null = null;
 
   startScanner(): void {
     const config = {
@@ -46,9 +47,10 @@ export class Scanner {
     }
 
     fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`)
-      .then((res) => res.json())
+      .then((res) => res.json() as Promise<OpenFoodFactsResponse>)
       .then((data) => {
         if (data.status === 1) {
+          this.productInfo = data.product;
           console.log('Producto:', data.product);
         } else {
           console.warn('Producto no encontrado');

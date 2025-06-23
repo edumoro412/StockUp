@@ -2,4 +2,18 @@
   <button (click)="startScanner()">Scanear el codigo</button>
 
   <div id="scanner" class="scanner-box"></div>
+
+  <div ngIf="productInfo">
+    <h2>{{ productInfo?.product_name }}</h2>
+    <img [src]="productInfo?.image_url" alt="Imagen del producto" />
+    <ul>
+      <li>Calorías: {{ productInfo?.nutriments?.energy_kcal }} kcal</li>
+      <li>Grasas: {{ productInfo?.nutriments?.fat }} g</li>
+      <li>Azúcares: {{ productInfo?.nutriments?.sugars }} g</li>
+      <li>Proteínas: {{ productInfo?.nutriments?.proteins }} g</li>
+      <li>
+        Nutri-Score: {{ productInfo?.nutrition_score_grade?.toUpperCase() }}
+      </li>
+    </ul>
+  </div>
 </section>
