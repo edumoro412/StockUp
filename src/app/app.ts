@@ -5,7 +5,7 @@ import { Scanner } from './scanner/scanner';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Scanner],
+  imports: [RouterOutlet, Header],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
