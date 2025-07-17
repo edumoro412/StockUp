@@ -15,7 +15,15 @@ export class SupabaseService {
     );
   }
 
-  get client() {
-    return this.supabase;
+  getUsers() {
+    return this.supabase.from('users').select('*');
+  }
+  createUser(email: string, password: string, name: string, surnames: string) {
+    return this.supabase.from('users').insert({
+      email: email,
+      password: password,
+      name: name,
+      surnames: surnames,
+    });
   }
 }
