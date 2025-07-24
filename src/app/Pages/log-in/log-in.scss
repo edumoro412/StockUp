@@ -1,0 +1,24 @@
+.container {
+  margin: 0;
+  padding: 0;
+  min-height: 100dvh;
+
+  h1 {
+    margin: 0;
+    color: rgb(56, 215, 56);
+    font-size: 3em;
+    padding: 1em 0 1em;
+    text-align: center;
+  }
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+
+  &__form {
+    border: 1px solid rgb(56, 215, 56);
+    border-radius: 1em;
+    padding: 2em;
+  }
+}
