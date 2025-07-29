@@ -1,18 +1,33 @@
-<div class="container">
-  <h1>¡Bienvenido de nuevo!</h1>
+<div class="background">
+  <div class="container">
+    <div class="container__image">
+      <img src="/img/background.jpg" alt="Login image" />
+    </div>
 
-  <div class="login">
-    <form action="" class="login__form">
-      <h2>Iniciar Sesión</h2>
-      <p class="login__form--section">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" />
-      </p>
+    <div class="login">
+      <form action="" class="login__form">
+        <h1 class="login__form--h2">Iniciar Sesión</h1>
+        <p class="login__form--section">
+          <input type="email" name="email" id="email" placeholder="Email" />
+        </p>
 
-      <p class="login__form--section">
-        <label for="password">Contraseña</label>
-        <input type="password" name="password" id="password" />
-      </p>
-    </form>
+        <p class="login__form--section">
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Contraseña"
+          />
+        </p>
+        <p class="enlace">
+          ¿No tienes una cuenta? Registrate <a href="#">aqui</a>
+        </p>
+        <section class="login__form--button">
+          <button type="submit" class="login__form--button-button">
+            INICAR SESIÓN
+          </button>
+        </section>
+      </form>
+    </div>
   </div>
 </div>
