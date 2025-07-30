@@ -1,33 +1,25 @@
-<div class="background">
-  <div class="container">
-    <div class="container__image">
-      <img src="/img/background.jpg" alt="Login image" />
-    </div>
+<app-login-register>
+  <form action="" class="login__form">
+    <h1 class="login__form--h2">Iniciar Sesión</h1>
+    <p class="login__form--section">
+      <input type="email" name="email" id="email" placeholder="Email" />
+    </p>
 
-    <div class="login">
-      <form action="" class="login__form">
-        <h1 class="login__form--h2">Iniciar Sesión</h1>
-        <p class="login__form--section">
-          <input type="email" name="email" id="email" placeholder="Email" />
-        </p>
-
-        <p class="login__form--section">
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Contraseña"
-          />
-        </p>
-        <p class="enlace">
-          ¿No tienes una cuenta? Registrate <a href="#">aqui</a>
-        </p>
-        <section class="login__form--button">
-          <button type="submit" class="login__form--button-button">
-            INICAR SESIÓN
-          </button>
-        </section>
-      </form>
-    </div>
-  </div>
-</div>
+    <p class="login__form--section">
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Contraseña"
+      />
+    </p>
+    <p class="enlace">
+      ¿No tienes una cuenta? Registrate <a href="register">aqui</a>
+    </p>
+    <section class="login__form--button">
+      <button type="submit" class="login__form--button-button">
+        INICAR SESIÓN
+      </button>
+    </section>
+  </form>
+</app-login-register>
