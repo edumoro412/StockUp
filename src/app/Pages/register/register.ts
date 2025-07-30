@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { LoginRegister } from '../../layouts/login-register/login-register';
 
 @Component({
-  selector: 'app-log-in',
+  selector: 'app-register',
   imports: [LoginRegister],
-  templateUrl: './log-in.html',
-  styleUrl: './log-in.scss',
+  templateUrl: './register.html',
+  styleUrl: './register.scss',
 })
-export class LogIn {}
+export class Register {}

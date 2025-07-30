@@ -1,6 +1,12 @@
 <app-login-register>
   <form action="" class="login__form">
-    <h1 class="login__form--h2">Iniciar Sesión</h1>
+    <h1 class="login__form--h2">Crea tu cuenta</h1>
+    <p class="login__form--section">
+      <input type="text" name="name" id="name" placeholder="Nombre" />
+    </p>
+    <p class="login__form--section">
+      <input type="text" name="surname" id="surname" placeholder="Apellido" />
+    </p>
     <p class="login__form--section">
       <input type="email" name="email" id="email" placeholder="Email" />
     </p>
@@ -13,12 +19,11 @@
         placeholder="Contraseña"
       />
     </p>
-    <p class="enlace">
-      ¿No tienes una cuenta? Registrate <a href="register">aqui</a>
-    </p>
+
+    <p class="enlace">¿Ya tienes una cuenta? Accede <a href="login">aqui</a></p>
     <section class="login__form--button">
       <button type="submit" class="login__form--button-button">
-        INICAR SESIÓN
+        CREAR CUENTA
       </button>
     </section>
   </form>
