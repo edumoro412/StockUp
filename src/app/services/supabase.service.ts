@@ -56,6 +56,10 @@ export class SupabaseService {
     return this.supabase.auth.signInWithPassword({ email, password });
   }
 
+  async getUser() {
+    const { data } = await this.supabase.auth.getUser();
+    return data.user;
+  }
   //ESTO LO TENGO QUE REVISAR PORQUE NO FUNCIONA
   resendConfirmation(email: string) {
     return this.supabase.auth.resend({
