@@ -46,6 +46,7 @@
         color: white;
         transition: all 0.3s ease-in-out;
         box-shadow: 0 0 1em rgba(65, 175, 65, 0.4);
+        margin: 0 0 1em 0;
         &:hover {
           background-color: #005a00;
           transform: scale(1.01);
@@ -70,6 +71,8 @@ small {
 }
 
 .error-message {
+  display: flex;
+  flex-direction: column;
   color: #ff4d4f;
   background-color: #fff1f0;
   border: 1px solid #ffa39e;

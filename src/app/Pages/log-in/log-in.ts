@@ -67,15 +67,19 @@ export class LogIn {
     }
   }
 
-  async resendEmailConfirmation() {
+  async resendEmailConfirmation(event: Event) {
+    event.preventDefault();
+
     const email = this.form.get('email')?.value;
     const { error } = await this.supabaseService.resendConfirmation(email);
 
     if (error) {
       this.error = 'No se pudo reenviar el correo: ' + error.message;
+      console.log('No se pudo reenviar el correo de confirmación:', error);
     } else {
       this.error =
         'Email de confirmacion reenviado. Revisa tu bandeja de entrada o spam 📬';
+      console.log('Email de confirmación reenviado correctamente');
     }
   }
 }

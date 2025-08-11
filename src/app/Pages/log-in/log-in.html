@@ -49,17 +49,11 @@
     <div *ngIf="error?.includes('confirmar tu correo')">
       <a
         href="/login"
-        (click)="resendEmailConfirmation()"
+        (click)="resendEmailConfirmation($event)"
         class="error-message"
       >
         {{ error }} — Haz clic aquí para reenviar el correo de confirmación.
       </a>
-    </div>
-    <div
-      *ngIf="error && !error.includes('confirmar tu correo')"
-      class="error-message"
-    >
-      {{error}}
     </div>
   </form>
 </app-login-register>
