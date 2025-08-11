@@ -11,6 +11,7 @@
     &--section {
       padding: 0.5em 5em;
       display: flex;
+      flex-direction: column;
       justify-content: center;
 
       input {
@@ -62,6 +63,20 @@
     cursor: pointer;
     text-decoration: underline;
   }
+}
+
+small {
+  color: red;
+}
+
+.error-message {
+  color: #ff4d4f;
+  background-color: #fff1f0;
+  border: 1px solid #ffa39e;
+  padding: 10px;
+  margin: 15px;
+  border-radius: 4px;
+  font-weight: bold;
 }
 
 @media (max-width: 1024px) {

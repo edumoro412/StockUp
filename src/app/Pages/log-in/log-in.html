@@ -1,18 +1,43 @@
 <app-login-register>
-  <form action="" class="login__form">
+  <form [formGroup]="form" action="" (ngSubmit)="LogIn()" class="login__form">
     <h1 class="login__form--h2">Iniciar Sesión</h1>
-    <p class="login__form--section">
-      <input type="email" name="email" id="email" placeholder="Email" />
-    </p>
+    <div class="login__form--section">
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Email"
+        formControlName="email"
+      />
+      <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+        <small *ngIf="form.get('email')?.errors?.['required']">
+          El email es obligatorio
+        </small>
+        <small *ngIf="form.get('email')?.errors?.['email']">
+          El email debe tener un formato válido
+        </small>
+      </div>
+    </div>
 
-    <p class="login__form--section">
+    <div class="login__form--section">
       <input
         type="password"
         name="password"
         id="password"
         placeholder="Contraseña"
+        formControlName="password"
       />
-    </p>
+      <div
+        *ngIf="form.get('password')?.invalid && form.get('password')?.touched"
+      >
+        <small *ngIf="form.get('password')?.errors?.['required']">
+          La contraseña es obligatoria
+        </small>
+        <small *ngIf="form.get('password')?.errors?.['minlength']">
+          La contraseña debe tener al menos 6 caracteres
+        </small>
+      </div>
+    </div>
     <p class="enlace">
       ¿No tienes una cuenta? Registrate <a href="register">aqui</a>
     </p>
@@ -21,5 +46,14 @@
         INICAR SESIÓN
       </button>
     </section>
+    <div *ngIf="error?.includes('confirmar tu correo')">
+      <a
+        href="/login"
+        (click)="resendEmailConfirmation($event)"
+        class="error-message"
+      >
+        {{ error }} — Haz clic aquí para reenviar el correo de confirmación.
+      </a>
+    </div>
   </form>
 </app-login-register>

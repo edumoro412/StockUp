@@ -1,30 +1,90 @@
 <app-login-register>
-  <form action="" class="login__form">
+  <form [formGroup]="form" class="login__form" (ngSubmit)="onSubmit()">
     <h1 class="login__form--h2">Crea tu cuenta</h1>
-    <p class="login__form--section">
-      <input type="text" name="name" id="name" placeholder="Nombre" />
-    </p>
-    <p class="login__form--section">
-      <input type="text" name="surname" id="surname" placeholder="Apellido" />
-    </p>
-    <p class="login__form--section">
-      <input type="email" name="email" id="email" placeholder="Email" />
-    </p>
 
-    <p class="login__form--section">
+    <div class="login__form--section">
+      <input
+        type="text"
+        id="name"
+        placeholder="Nombre"
+        formControlName="name"
+      />
+      <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+        <small *ngIf="form.get('name')?.errors?.['required']">
+          El nombre es obligatorio
+        </small>
+        <small *ngIf="form.get('name')?.errors?.['minlength']">
+          El nombre debe tener al menos 2 caracteres
+        </small>
+      </div>
+    </div>
+
+    <div class="login__form--section">
+      <input
+        type="text"
+        id="surname"
+        placeholder="Apellido"
+        formControlName="surnames"
+      />
+      <div
+        *ngIf="form.get('surnames')?.invalid && form.get('surnames')?.touched"
+      >
+        <small *ngIf="form.get('surnames')?.errors?.['required']">
+          El apellido es obligatorio
+        </small>
+        <small *ngIf="form.get('surnames')?.errors?.['minlength']">
+          El apellido debe tener al menos 2 caracteres
+        </small>
+      </div>
+    </div>
+
+    <div class="login__form--section">
+      <input
+        type="email"
+        id="email"
+        placeholder="Email"
+        formControlName="email"
+      />
+      <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+        <small *ngIf="form.get('email')?.errors?.['required']">
+          El email es obligatorio
+        </small>
+        <small *ngIf="form.get('email')?.errors?.['email']">
+          El formato del email no es válido
+        </small>
+      </div>
+    </div>
+
+    <div class="login__form--section">
       <input
         type="password"
-        name="password"
         id="password"
         placeholder="Contraseña"
+        formControlName="password"
       />
-    </p>
+      <div
+        *ngIf="form.get('password')?.invalid && form.get('password')?.touched"
+      >
+        <small *ngIf="form.get('password')?.errors?.['required']">
+          La contraseña es obligatoria
+        </small>
+        <small *ngIf="form.get('password')?.errors?.['minlength']">
+          La contraseña debe tener al menos 6 caracteres
+        </small>
+      </div>
+    </div>
 
-    <p class="enlace">¿Ya tienes una cuenta? Accede <a href="login">aqui</a></p>
+    <p class="enlace">¿Ya tienes una cuenta? Accede <a href="login">aquí</a></p>
+
     <section class="login__form--button">
-      <button type="submit" class="login__form--button-button">
+      <button
+        type="submit"
+        class="login__form--button-button"
+        [disabled]="form.invalid"
+      >
         CREAR CUENTA
       </button>
     </section>
+    <div *ngIf="error" class="error-message">{{ error }}</div>
   </form>
 </app-login-register>
