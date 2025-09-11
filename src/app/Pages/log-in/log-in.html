@@ -9,14 +9,17 @@
         placeholder="Email"
         formControlName="email"
       />
-      <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
-        <small *ngIf="form.get('email')?.errors?.['required']">
-          El email es obligatorio
-        </small>
-        <small *ngIf="form.get('email')?.errors?.['email']">
-          El email debe tener un formato válido
-        </small>
+      @if(form.get('email')?.invalid && form.get('email')?.touched){
+
+      <div>
+        @if (form.get('email')?.errors?.['required']) {
+        <small> El email es obligatorio </small>
+        } @if (form.get('email')?.errors?.['email']) {
+
+        <small> El email debe tener un formato válido </small>
+        }
       </div>
+      }
     </div>
 
     <div class="login__form--section">
