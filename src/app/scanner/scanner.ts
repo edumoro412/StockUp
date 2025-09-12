@@ -1,16 +1,28 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Html5Qrcode } from 'html5-qrcode';
+import { ReactiveFormsModule } from '@angular/forms';
+import { Header } from '../layouts/header/header';
 
 @Component({
   selector: 'app-scanner',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule, Header],
   templateUrl: './scanner.html',
   styleUrl: './scanner.scss',
 })
 export class Scanner {
   private html5QrCode!: Html5Qrcode;
   productInfo: Product | null = null;
+  codeForm: FormGroup;
+  error: string = '';
+
+  constructor(private fb: FormBuilder, private router: Router) {
+    this.codeForm = this.fb.group({
+      barcode: [''],
+    });
+  }
 
   startScanner(): void {
     const config = {
@@ -38,26 +50,41 @@ export class Scanner {
       .catch((err) => console.log('Error al iniciar escáner:', err));
   }
 
-  fetchProduct(code: string): void {
+  fetchProduct(code: string): Promise<Product | null> {
     const isBarcode = /^\d{8,14}$/.test(code);
 
     if (!isBarcode) {
-      console.warn('No es un código de barras válido');
-      return;
+      this.error = 'El código escaneado no es un código de barras válido.';
+      return Promise.resolve(null);
     }
 
-    fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`)
+    return fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`)
       .then((res) => res.json() as Promise<OpenFoodFactsResponse>)
       .then((data) => {
         if (data.status === 1) {
           this.productInfo = data.product;
           console.log('Producto:', data.product);
+          return data.product;
         } else {
-          console.warn('Producto no encontrado');
+          this.error = 'Producto no encontrado';
+          return null;
         }
       })
       .catch((err) => {
         console.error('Error al hacer la petición:', err);
+        return null;
       });
+  }
+  async searchByCode(): Promise<void> {
+    const code: string = (this.codeForm.get('barcode')?.value ?? '').trim();
+    if (!code) {
+      return;
+    }
+    const product = await this.fetchProduct(code);
+    if (product) {
+      this.router.navigate(['/product', code]);
+    } else {
+      this.error = 'Producto no encontrado';
+    }
   }
 }

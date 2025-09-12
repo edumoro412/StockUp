@@ -1,7 +1,17 @@
+<app-header></app-header>
 <section class="scanner-container">
+  <form [formGroup]="codeForm" (ngSubmit)="searchByCode()">
+    <label for="barcode">Introduce el código de barras:</label>
+    <input type="text" id="barcode" formControlName="barcode" />
+    <button type="submit">Buscar</button>
+  </form>
   <button (click)="startScanner()">Scanear el codigo</button>
 
   <div id="scanner" class="scanner-box"></div>
+
+  @if(error){
+  <small class="error">{{error}}</small>
+  }
 
   <div ngIf="productInfo">
     <h2>{{ productInfo?.product_name }}</h2>
