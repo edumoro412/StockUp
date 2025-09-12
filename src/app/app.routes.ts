@@ -4,6 +4,7 @@ import { Scanner } from './scanner/scanner';
 import { LogIn } from './Pages/log-in/log-in';
 import { Register } from './Pages/register/register';
 import { authGuard } from './auth-guard';
+import { Product } from './product/product';
 
 export const routes: Routes = [
   {
@@ -22,5 +23,9 @@ export const routes: Routes = [
   {
     path: 'register',
     component: Register,
+  },
+  {
+    path: 'product/:id',
+    component: Product,
   },
 ];
