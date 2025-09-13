@@ -14,7 +14,7 @@ import { Header } from '../layouts/header/header';
 })
 export class Scanner {
   private html5QrCode!: Html5Qrcode;
-  productInfo: Product | null = null;
+  productInfo: ProductType | null = null;
   codeForm: FormGroup;
   error: string = '';
 
@@ -50,7 +50,7 @@ export class Scanner {
       .catch((err) => console.log('Error al iniciar escáner:', err));
   }
 
-  fetchProduct(code: string): Promise<Product | null> {
+  fetchProduct(code: string): Promise<ProductType | null> {
     const isBarcode = /^\d{8,14}$/.test(code);
 
     if (!isBarcode) {
