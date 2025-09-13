@@ -1,1 +1,21 @@
-<p>product works!</p>
+<app-header></app-header>
+<div class="container">
+  @if(this.loading){
+  <p>Cargando...</p>
+  } @if(this.productInfo){
+  <h2>{{ productInfo.product_name }}</h2>
+  <img [src]="productInfo.image_url" alt="Imagen del producto" />
+  <ul>
+    <li>Calorías: {{ productInfo.nutriments.energy | KjtoCal}} kcal</li>
+    <li>Grasas: {{ productInfo.nutriments.fat }} g</li>
+    <li>Carbohidratos: {{ productInfo.nutriments.carbohydrates }} g</li>
+    <li>Proteínas: {{ productInfo.nutriments.proteins }} g</li>
+    <li>Nutri-Score: {{ productInfo.nutrition_grades?.toUpperCase() }}</li>
+
+    @if (productInfo.quantity != "" && productInfo.quantity != null) {
+
+    <li>Cantidad: {{productInfo.quantity}}</li>
+    }
+  </ul>
+  }
+</div>
