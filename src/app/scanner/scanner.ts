@@ -17,6 +17,7 @@ export class Scanner {
   productInfo: ProductType | null = null;
   codeForm: FormGroup;
   error: string = '';
+  scann: boolean = false;
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.codeForm = this.fb.group({
@@ -24,7 +25,19 @@ export class Scanner {
     });
   }
 
-  startScanner(): void {
+  toggleScanner(): void {
+    if (this.scann) {
+      this.stopScanner();
+    } else {
+      this.startScanner();
+    }
+    this.scann = !this.scann;
+  }
+
+  stopScanner(): void {
+    this.html5QrCode.stop();
+  }
+  async startScanner(): Promise<void> {
     const config = {
       fps: 10,
       qrbox: {
@@ -40,8 +53,13 @@ export class Scanner {
         config,
         (decodeText) => {
           console.log('Código escaneado:', decodeText);
-          this.fetchProduct(decodeText);
-          this.html5QrCode.stop();
+          const code = this.fetchProduct(decodeText);
+          if (code) {
+            this.html5QrCode.stop();
+            this.router.navigate(['/product', code]);
+          } else {
+            this.error = 'Producto no encontrado';
+          }
         },
         (errorMessage) => {
           console.warn('Error al escanear: ', errorMessage);

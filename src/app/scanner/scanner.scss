@@ -1,0 +1,62 @@
+.scanner-container {
+  &__title {
+    text-align: center;
+    font-size: 3em;
+  }
+
+  &__searchs {
+    height: 70dvh;
+    padding: 2em;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    &--form {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &-title {
+        font-size: 2em;
+      }
+      &-input {
+        width: 50%;
+        margin: 1em 0;
+        height: 2em;
+        border-radius: 0.5em;
+      }
+    }
+    &--scanner {
+      padding: 2em;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &-box {
+        width: 100%;
+        margin: 1em;
+      }
+    }
+  }
+}
+
+.button {
+  background-color: var(--c-primary);
+  padding: 1em 2em;
+  border: none;
+  border-radius: 1em;
+  color: white;
+  transition: all 0.5s ease-in-out;
+  width: 50%;
+
+  &:hover {
+    scale: (1.1);
+    background-color: #109223;
+  }
+}
+.error {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: red;
+  font-weight: bold;
+}

@@ -1,15 +1,34 @@
 <app-header></app-header>
 <section class="scanner-container">
-  <form [formGroup]="codeForm" (ngSubmit)="searchByCode()">
-    <label for="barcode">Introduce el código de barras:</label>
-    <input type="text" id="barcode" formControlName="barcode" />
-    <button type="submit">Buscar</button>
-  </form>
-  <button (click)="startScanner()">Scanear el codigo</button>
-
-  <div id="scanner" class="scanner-box"></div>
-
+  <h1 class="scanner-container__title">Escanea o busca tu producto</h1>
   @if(error){
   <small class="error">{{error}}</small>
   }
+  <section class="scanner-container__searchs">
+    <form
+      [formGroup]="codeForm"
+      (ngSubmit)="searchByCode()"
+      class="scanner-container__searchs--form"
+    >
+      <label for="barcode"
+        ><h2 class="scanner-container__searchs--form-title">
+          Introduce el código de barras
+        </h2></label
+      >
+      <input
+        type="text"
+        id="barcode"
+        formControlName="barcode"
+        class="scanner-container__searchs--form-input"
+      />
+
+      <button type="submit" class="button">Buscar</button>
+    </form>
+    <article class="scanner-container__searchs--scanner">
+      <button (click)="toggleScanner()" class="button">
+        {{!scann ? 'Escanear el código' : 'Dejar de escanear'}}
+      </button>
+      <div id="scanner" class="scanner-container__searchs--scanner-box"></div>
+    </article>
+  </section>
 </section>
