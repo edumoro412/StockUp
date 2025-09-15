@@ -1,21 +1,48 @@
 <app-header></app-header>
-<div class="container">
+<div class="container-product">
   @if(this.loading){
-  <p>Cargando...</p>
+  <div class="container-spinner">
+    <img
+      src="/gifs/egg.gif"
+      alt="Cargando..."
+      class="container-spinner__spinner"
+    />
+  </div>
   } @if(this.productInfo){
-  <h2>{{ productInfo.product_name }}</h2>
-  <img [src]="productInfo.image_url" alt="Imagen del producto" />
-  <ul>
-    <li>Calorías: {{ productInfo.nutriments.energy | KjtoCal}} kcal</li>
-    <li>Grasas: {{ productInfo.nutriments.fat }} g</li>
-    <li>Carbohidratos: {{ productInfo.nutriments.carbohydrates }} g</li>
-    <li>Proteínas: {{ productInfo.nutriments.proteins }} g</li>
-    <li>Nutri-Score: {{ productInfo.nutrition_grades?.toUpperCase() }}</li>
+  <h1 class="container-product__title">{{ productInfo.product_name }}</h1>
+  <div class="container-product__info">
+    <img
+      [src]="productInfo.image_url"
+      alt="Imagen del producto"
+      class="container-product__info--image"
+    />
+    <ul class="container-product__info--list">
+      <li>
+        <span class="bold">Calorías:</span> {{ productInfo.nutriments.energy &&
+        productInfo.nutriments.energy > 0 ? (productInfo.nutriments.energy |
+        KjtoCal) + ' kcal' : 'No tenemos esa información'}}
+      </li>
+      <li>
+        <span class="bold">Grasas:</span> {{ productInfo.nutriments.fat }} g
+      </li>
+      <li>
+        <span class="bold">Carbohidratos:</span> {{
+        productInfo.nutriments.carbohydrates }} g
+      </li>
+      <li>
+        <span class="bold">Proteínas:</span> {{ productInfo.nutriments.proteins
+        }} g
+      </li>
+      <li>
+        <span class="bold">Nutri-Score:</span> {{
+        productInfo.nutrition_grades?.toUpperCase() }}
+      </li>
 
-    @if (productInfo.quantity != "" && productInfo.quantity != null) {
+      @if (productInfo.quantity != "" && productInfo.quantity != null) {
 
-    <li>Cantidad: {{productInfo.quantity}}</li>
-    }
-  </ul>
+      <li><span class="bold">Cantidad:</span> {{productInfo.quantity}}</li>
+      }
+    </ul>
+  </div>
   }
 </div>
