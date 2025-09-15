@@ -9,7 +9,10 @@
     />
   </div>
   } @if(this.productInfo){
-  <h1 class="container-product__title">{{ productInfo.product_name }}</h1>
+  <h1 class="container-product__title">
+    {{ productInfo.product_name == "" ? productInfo.brands :
+    productInfo.product_name}}
+  </h1>
   <div class="container-product__info">
     <img
       [src]="productInfo.image_url"
