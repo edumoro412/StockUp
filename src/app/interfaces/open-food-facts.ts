@@ -16,6 +16,7 @@ type ProductType = {
   nutrition_grades: string | null;
   quantity: string | null;
   additives_tags?: string[];
+  brands: string;
 };
 
 type OpenFoodFactsResponse = {
