@@ -31,6 +31,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      &-title {
+        font-size: 2em;
+      }
       &-box {
         width: 100%;
         margin: 1em;
@@ -47,6 +50,7 @@
   color: white;
   transition: all 0.5s ease-in-out;
   width: 50%;
+  font-weight: bold;
 
   &:hover {
     scale: (1.1);
@@ -59,4 +63,25 @@
   width: 100%;
   color: red;
   font-weight: bold;
+}
+
+@media (max-width: 480px) {
+  .scanner-container {
+    &__title {
+      font-size: 1.5em;
+    }
+    &__searchs {
+      padding: 0;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      &--form,
+      &--scanner {
+        width: 100%;
+        &-title {
+          font-size: 1em;
+        }
+      }
+    }
+  }
 }
