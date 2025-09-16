@@ -56,6 +56,24 @@ export class SupabaseService {
     return this.supabase.auth.signInWithPassword({ email, password });
   }
 
+  async getProducts(userId: string) {
+    const { data, error } = await this.supabase
+      .from('pantry')
+      .select('*')
+      .eq('user_id', userId);
+
+    if (error) {
+      console.log('Error fetching products', error);
+      return [];
+    }
+    return data || [];
+  }
+
+  async getProductsOfCurrentUser() {
+    const user = await this.getUser();
+    if (!user) return [];
+    return this.getProducts(user.id);
+  }
   async getUser() {
     const { data } = await this.supabase.auth.getUser();
     return data.user;
