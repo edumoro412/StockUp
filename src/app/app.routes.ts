@@ -5,6 +5,7 @@ import { LogIn } from './Pages/log-in/log-in';
 import { Register } from './Pages/register/register';
 import { authGuard } from './auth-guard';
 import { Product } from './product/product';
+import { User } from './user/user';
 
 export const routes: Routes = [
   {
@@ -27,5 +28,9 @@ export const routes: Routes = [
   {
     path: 'product/:id',
     component: Product,
+  },
+  {
+    path: 'user',
+    component: User,
   },
 ];
