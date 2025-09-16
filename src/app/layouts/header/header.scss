@@ -7,9 +7,7 @@ header {
   padding: 0 1em; // un poco de padding lateral, opcional
 
   .header__logo {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
+    height: 100%;
 
     &--logo {
       height: 5em;
@@ -39,4 +37,8 @@ header {
       }
     }
   }
+}
+
+.header a.active {
+  color: #fff;
 }

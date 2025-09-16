@@ -1,19 +1,37 @@
+<app-header></app-header>
 <section class="scanner-container">
-  <button (click)="startScanner()">Scanear el codigo</button>
+  <h1 class="scanner-container__title">Escanea o busca tu producto</h1>
+  @if(error){
+  <small class="error">{{error}}</small>
+  }
+  <section class="scanner-container__searchs">
+    <form
+      [formGroup]="codeForm"
+      (ngSubmit)="searchByCode()"
+      class="scanner-container__searchs--form"
+    >
+      <label for="barcode"
+        ><h2 class="scanner-container__searchs--form-title">
+          Introduce el código de barras
+        </h2></label
+      >
+      <input
+        type="text"
+        id="barcode"
+        formControlName="barcode"
+        class="scanner-container__searchs--form-input"
+      />
 
-  <div id="scanner" class="scanner-box"></div>
-
-  <div ngIf="productInfo">
-    <h2>{{ productInfo?.product_name }}</h2>
-    <img [src]="productInfo?.image_url" alt="Imagen del producto" />
-    <ul>
-      <li>Calorías: {{ productInfo?.nutriments?.energy_kcal }} kcal</li>
-      <li>Grasas: {{ productInfo?.nutriments?.fat }} g</li>
-      <li>Azúcares: {{ productInfo?.nutriments?.sugars }} g</li>
-      <li>Proteínas: {{ productInfo?.nutriments?.proteins }} g</li>
-      <li>
-        Nutri-Score: {{ productInfo?.nutrition_score_grade?.toUpperCase() }}
-      </li>
-    </ul>
-  </div>
+      <button type="submit" class="button">Buscar</button>
+    </form>
+    <article class="scanner-container__searchs--scanner">
+      <h2 class="scanner-container__searchs--scanner-title">
+        Escanea el código de barras
+      </h2>
+      <button (click)="toggleScanner()" class="button">
+        {{!scann ? 'Escanear el código' : 'Dejar de escanear'}}
+      </button>
+      <div id="scanner" class="scanner-container__searchs--scanner-box"></div>
+    </article>
+  </section>
 </section>
