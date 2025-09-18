@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -8,16 +9,13 @@ import { environment } from '../../environments/environment';
 export class SupabaseService {
   private supabase: SupabaseClient;
 
-  constructor() {
+  constructor(private router: Router) {
     this.supabase = createClient(
       environment.supabaseUrl,
       environment.supabaseKey
     );
   }
 
-  getUsers() {
-    return this.supabase.from('users').select('*');
-  }
   async createUser(
     email: string,
     password: string,
@@ -29,6 +27,10 @@ export class SupabaseService {
       password: password,
       options: {
         emailRedirectTo: 'https://stock-up-green.vercel.app/login',
+        data: {
+          name,
+          surnames,
+        },
       },
     });
 
@@ -56,6 +58,24 @@ export class SupabaseService {
     return this.supabase.auth.signInWithPassword({ email, password });
   }
 
+  async getProducts(userId: string) {
+    const { data, error } = await this.supabase
+      .from('pantry')
+      .select('*')
+      .eq('user_id', userId);
+
+    if (error) {
+      console.log('Error fetching products', error);
+      return [];
+    }
+    return data || [];
+  }
+
+  async getProductsOfCurrentUser() {
+    const user = await this.getUser();
+    if (!user) return [];
+    return this.getProducts(user.id);
+  }
   async getUser() {
     const { data } = await this.supabase.auth.getUser();
     return data.user;
@@ -66,5 +86,26 @@ export class SupabaseService {
       type: 'signup',
       email,
     });
+  }
+
+  async signOut() {
+    const { error } = await this.supabase.auth.signOut();
+    if (error) {
+      console.error('No se ha podido cerrar la sesión', error);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  async getUserName(): Promise<string | null> {
+    const { data, error } = await this.supabase.auth.getUser();
+    if (error || !data.user) {
+      return null;
+    }
+    const name = data.user.user_metadata['name'];
+    if (!name) {
+      return null;
+    }
+    return name;
   }
 }
