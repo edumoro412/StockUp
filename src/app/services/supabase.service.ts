@@ -78,7 +78,17 @@ export class SupabaseService {
   }
   async getUser() {
     const { data } = await this.supabase.auth.getUser();
+    console.log(data);
     return data.user;
+  }
+
+  async getUserId() {
+    const user = await this.getUser();
+    if (!user) {
+      return null;
+    } else {
+      return user.id;
+    }
   }
   //ESTO LO TENGO QUE REVISAR PORQUE NO FUNCIONA
   resendConfirmation(email: string) {
@@ -107,5 +117,19 @@ export class SupabaseService {
       return null;
     }
     return name;
+  }
+
+  async addToPantry(userId: string, code: string, quantity: number) {
+    const { data, error } = await this.supabase.from('pantry').upsert(
+      {
+        user_id: userId,
+        product_id: code,
+        quantity,
+      },
+      {}
+    );
+    if (error) {
+      console.log('Error guardando en la despensa');
+    }
   }
 }
