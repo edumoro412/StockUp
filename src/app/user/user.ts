@@ -10,12 +10,17 @@ import { SupabaseService } from '../services/supabase.service';
   styleUrl: './user.scss',
 })
 export class User implements OnInit {
-  products: any[] = []; //LO TENGO QUE TIPAR
-
+  name: string = 'Usuario';
   constructor(private supabaseService: SupabaseService) {}
+  ngOnInit(): void {
+    this.supabaseService.getUserName().then((name) => {
+      if (name) {
+        this.name = name;
+      }
+    });
+  }
 
-  //AQUI SACO TODOS LOS PRODUCTOS DEL USUARIO
-  async ngOnInit() {
-    this.products = await this.supabaseService.getProductsOfCurrentUser();
+  signOut() {
+    this.supabaseService.signOut();
   }
 }
