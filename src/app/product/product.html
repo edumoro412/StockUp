@@ -47,5 +47,21 @@
       }
     </ul>
   </div>
+  <button (click)="openModal()" class="container-product__button">
+    Añadir a la despensa
+  </button>
+  } @if (showModal) {
+  <div class="modal">
+    <h2 class="modal__title">¿Cuántas unidades quieres añadir?</h2>
+    <input type="number" min="1" class="modal__input" [(ngModel)]="quantity" />
+    <div class="modal__actions">
+      <button (click)="addToPantry()" class="modal__actions--confirm">
+        {{isLoading ? 'Añadiendo...' : 'Confirmar'}}
+      </button>
+      <button (click)="closeModal()" class="modal__actions--decline">
+        Cancelar
+      </button>
+    </div>
+  </div>
   }
 </div>
