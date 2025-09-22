@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
+import { ProductCard } from '../component/product-card/product-card';
 
 @Injectable({
   providedIn: 'root',
@@ -56,6 +57,30 @@ export class SupabaseService {
 
   async Login(email: string, password: string) {
     return this.supabase.auth.signInWithPassword({ email, password });
+  }
+
+  fetchProduct(code: string): Promise<ProductType | null> {
+    const isBarcode = /^\d{8,14}$/.test(code);
+
+    if (!isBarcode) {
+      return Promise.resolve(null);
+    }
+
+    return fetch(`https://world.openfoodfacts.org/api/v0/product/${code}.json`)
+      .then((res) => res.json() as Promise<OpenFoodFactsResponse>)
+      .then((data) => {
+        if (data.status === 1) {
+          const productInfo = data.product;
+          console.log('Producto:', data.product);
+          return productInfo;
+        } else {
+          return null;
+        }
+      })
+      .catch((err) => {
+        console.error('Error al hacer la petición:', err);
+        return null;
+      });
   }
 
   async getProducts(userId: string) {
@@ -132,11 +157,17 @@ export class SupabaseService {
         return;
       }
 
+      const productInfo = await this.fetchProduct(code);
+      console.log('=====Esto es productInfo', productInfo?.product_name);
       if (data == null) {
         await this.supabase.from('pantry').insert({
           user_id: userId,
           product_id: code,
           quantity,
+          product_name: productInfo?.product_name?.trim()
+            ? productInfo.product_name
+            : productInfo?.brands,
+          image_url: productInfo?.image_url,
         });
       } else {
         const { data, error } = await this.supabase
