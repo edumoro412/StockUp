@@ -41,8 +41,6 @@ export class Product {
     }
   }
 
-  //ME HE QUEDADO AQUI
-
   async addToPantry(): Promise<void> {
     try {
       this.isLoading = true;
