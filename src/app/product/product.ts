@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-product',
-  imports: [Header, KJtoCal, FormsModule],
+  imports: [KJtoCal, FormsModule],
   templateUrl: './product.html',
   styleUrl: './product.scss',
 })
