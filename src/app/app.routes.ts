@@ -6,16 +6,21 @@ import { Register } from './Pages/register/register';
 import { authGuard } from './auth-guard';
 import { Product } from './product/product';
 import { User } from './user/user';
+import { Pantry } from './pantry/pantry';
+import { MainLayout } from './layouts/main-layout/main-layout';
 
 export const routes: Routes = [
   {
     path: '',
-    component: Home,
+    component: MainLayout,
     canActivate: [authGuard],
-  },
-  {
-    path: 'scanner',
-    component: Scanner,
+    children: [
+      { path: '', component: Home },
+      { path: 'scanner', component: Scanner },
+      { path: 'product/:id', component: Product },
+      { path: 'user', component: User },
+      { path: 'pantry', component: Pantry },
+    ],
   },
   {
     path: 'login',
@@ -24,13 +29,5 @@ export const routes: Routes = [
   {
     path: 'register',
     component: Register,
-  },
-  {
-    path: 'product/:id',
-    component: Product,
-  },
-  {
-    path: 'user',
-    component: User,
   },
 ];
