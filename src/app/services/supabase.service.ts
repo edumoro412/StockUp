@@ -120,16 +120,47 @@ export class SupabaseService {
   }
 
   async addToPantry(userId: string, code: string, quantity: number) {
-    const { data, error } = await this.supabase.from('pantry').upsert(
-      {
-        user_id: userId,
-        product_id: code,
-        quantity,
-      },
-      {}
-    );
-    if (error) {
-      console.log('Error guardando en la despensa');
+    try {
+      const { error, data } = await this.supabase
+        .from('pantry')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('product_id', code)
+        .maybeSingle();
+
+      if (error) {
+        return;
+      }
+
+      if (data == null) {
+        await this.supabase.from('pantry').insert({
+          user_id: userId,
+          product_id: code,
+          quantity,
+        });
+      } else {
+        const { data, error } = await this.supabase
+
+          .from('pantry')
+          .select('quantity')
+          .eq('user_id', userId)
+          .eq('product_id', code);
+
+        if (error) {
+          return;
+        }
+
+        const quantityNumber =
+          data.length > 0 ? data[0].quantity + quantity : 0;
+
+        await this.supabase
+          .from('pantry')
+          .update({ quantity: quantityNumber })
+          .eq('user_id', userId)
+          .eq('product_id', code);
+      }
+    } catch (e) {
+      console.log('Error guardando en la despensa', e);
     }
   }
 }
