@@ -1,10 +1,11 @@
-<div class="container">
-  <h1>Tus productos:</h1>
-  <app-product-card
-    *ngFor="let item of data"
-    [id]="item.product_id"
-    [imgUrl]="item.image_url"
-    [name]="item.product_name"
-    [quantity]="item.quantity"
-  ></app-product-card>
+<div class="pantry-container">
+  <h1 class="pantry-container__title">TUS PRODUCTOS:</h1>
+  <section class="pantry-container__products">
+    <app-product-card
+      *ngFor="let item of data"
+      [product]="item"
+      (increase)="increaseQuantity($event)"
+      (decrease)="decreaseButton($event)"
+    ></app-product-card>
+  </section>
 </div>
