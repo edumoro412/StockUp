@@ -33,4 +33,5 @@ type PantryProductType = {
   user_id: string;
   product_name: string;
   image_url: string;
+  isLoading?: boolean;
 };
