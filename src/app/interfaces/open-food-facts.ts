@@ -24,3 +24,14 @@ type OpenFoodFactsResponse = {
   code: string;
   product: ProductType;
 };
+
+type PantryProductType = {
+  id: string;
+  inserted_at: string;
+  product_id: string;
+  quantity: number;
+  user_id: string;
+  product_name: string;
+  image_url: string;
+  isLoading?: boolean;
+};

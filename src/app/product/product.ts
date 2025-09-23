@@ -2,17 +2,26 @@ import { Component } from '@angular/core';
 import { Header } from '../layouts/header/header';
 import { ActivatedRoute } from '@angular/router';
 import { KJtoCal } from '../services/pipe';
+import { SupabaseService } from '../services/supabase.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-product',
-  imports: [Header, KJtoCal],
+  imports: [KJtoCal, FormsModule],
   templateUrl: './product.html',
   styleUrl: './product.scss',
 })
 export class Product {
   productInfo: ProductType | null = null;
-  loading = false;
-  constructor(private route: ActivatedRoute) {}
+  loading: boolean = false;
+  showModal: boolean = false;
+  quantity: number = 1;
+  isLoading: boolean = false;
+  contains: boolean = false;
+  constructor(
+    private route: ActivatedRoute,
+    private supabase: SupabaseService
+  ) {}
   async ngOnInit(): Promise<void> {
     this.loading = true;
     try {
@@ -23,21 +32,48 @@ export class Product {
       const data = await response.json();
       if (data.status === 1) {
         this.productInfo = data.product;
-        console.log('====================');
-        console.log(this.productInfo);
-        console.log(this.productInfo?.product_name);
-        console.log(this.productInfo?.nutrition_grades);
-        console.log(this.productInfo?.nutriments.carbohydrates);
-        console.log(this.productInfo?.nutriments.fat);
-        console.log(this.productInfo?.product_name);
-        console.log(this.productInfo?.product_name);
       } else {
         this.productInfo = null;
+      }
+
+      if (code) {
+        this.contains = await this.supabase.contains(code);
       }
     } catch (err) {
       console.error('Error al cargar el producto', err);
     } finally {
       this.loading = false;
     }
+  }
+
+  async addToPantry(): Promise<void> {
+    try {
+      this.isLoading = true;
+      const userId = await this.supabase.getUserId();
+      if (!userId) {
+        console.log('No se ha obtenido el id del usuario en el addTuPantry()');
+        return;
+      }
+      const code = this.route.snapshot.paramMap.get('id');
+      if (!code) {
+        console.log('No se ha obtenido el código en addToPantry');
+        return;
+      }
+
+      await this.supabase.addToPantry(userId, code, this.quantity);
+
+      this.closeModal();
+    } catch (e) {
+      console.log('erroe en el addTiPantry', e);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  closeModal() {
+    this.showModal = false;
+  }
+  openModal() {
+    this.showModal = true;
   }
 }
