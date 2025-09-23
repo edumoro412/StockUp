@@ -83,11 +83,26 @@ export class SupabaseService {
       });
   }
 
+  async contains(code: string) {
+    const user = await this.getUserId();
+    const { data, error } = await this.supabase
+      .from('pantry')
+      .select('*')
+      .eq('user_id', user)
+      .eq('product_id', code);
+
+    if (data && data.length > 0) {
+      return true;
+    }
+    return false;
+  }
+
   async getProducts(userId: string) {
     const { data, error } = await this.supabase
       .from('pantry')
       .select('*')
-      .eq('user_id', userId);
+      .eq('user_id', userId)
+      .order('quantity', { ascending: false });
 
     if (error) {
       console.log('Error fetching products', error);
@@ -192,6 +207,50 @@ export class SupabaseService {
       }
     } catch (e) {
       console.log('Error guardando en la despensa', e);
+    }
+  }
+
+  async decreaseQuantity(product_id: string) {
+    if (product_id) {
+      let user_id = await this.getUserId();
+      if (user_id) {
+        const { data, error } = await this.supabase
+          .from('pantry')
+          .select('*')
+          .eq('user_id', user_id)
+          .eq('product_id', product_id);
+
+        if (error) {
+          return;
+        }
+        console.log(data);
+        const newQuantity = data.length > 0 ? data[0].quantity - 1 : 0;
+
+        await this.supabase
+          .from('pantry')
+          .update({ quantity: newQuantity })
+          .eq('user_id', user_id)
+          .eq('product_id', product_id);
+      }
+    }
+  }
+
+  async deletePantryItem(product_id: string) {
+    if (product_id) {
+      const user_id = await this.getUserId();
+      if (user_id) {
+        const { error } = await this.supabase
+          .from('pantry')
+          .delete()
+          .eq('user_id', user_id)
+          .eq('product_id', product_id);
+
+        if (error) {
+          console.log('Error al borrar la fila de la tabla pantry');
+        }
+      }
+    } else {
+      return;
     }
   }
 }
