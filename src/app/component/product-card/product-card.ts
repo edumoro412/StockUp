@@ -1,41 +1,46 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { SupabaseService } from '../../services/supabase.service';
 
 @Component({
   selector: 'app-product-card',
-  imports: [],
+  standalone: true,
   templateUrl: './product-card.html',
   styleUrl: './product-card.scss',
 })
 export class ProductCard {
-  @Input() name!: string;
-  @Input() imgUrl!: string;
-  @Input() quantity!: number;
-  @Input() id!: string;
+  @Input() product!: PantryProductType;
+  @Output() increase = new EventEmitter<PantryProductType>();
+  @Output() decrease = new EventEmitter<PantryProductType>();
 
-  constructor(private router: Router, private supabase: SupabaseService) {}
+  disableButton: boolean = false;
+
+  constructor(private router: Router) {}
 
   goToDetails() {
-    this.router.navigate(['/product', this.id]);
+    this.router.navigate(['/product', this.product.product_id]);
   }
 
-  async increaseQuantity(product: ProductType) {
-    if (product.quantity) {
-      product.quantity += 1;
-      const userId = await this.supabase.getUserId();
-      if (userId) {
-        await this.supabase.addToPantry(userId, this.id, 1);
-      }
+  onIncreaseClick(event: Event) {
+    try {
+      this.disableButton = true;
+      event.stopPropagation();
+      this.increase.emit(this.product);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      this.disableButton = false;
     }
-    return;
   }
 
-  async decreaseButton(product: ProductType) {
-    if (product.quantity && Number(product.quantity) > 1) {
-      await this.supabase.decreaseQuantity(product.code);
-    } else if (product.quantity ?? Number(product.quantity) == 1) {
-      await this.supabase.deletePantryItem(product.code);
+  onDecreaseClick(event: Event) {
+    try {
+      this.disableButton = true;
+      event.stopPropagation();
+      this.decrease.emit(this.product);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      this.disableButton = false;
     }
   }
 }

@@ -1,5 +1,25 @@
 <div class="card" (click)="goToDetails()">
-  <img class="card__img" [src]="imgUrl" alt="{{name}}" />
-  <h3 class="card__title">{{name}}</h3>
-  <p class="card__quantity">Cantidad: {{quantity}}</p>
+  <img
+    class="card__img"
+    [src]="product.image_url"
+    alt="{{product.product_name}}"
+  />
+  <h3 class="card__title">{{product.product_name}}</h3>
+  <p class="card__quantity">Cantidad: {{product.quantity}}</p>
+  <div class="card__buttons">
+    <button
+      [disabled]="this.product.isLoading"
+      class="card__buttons--button-green"
+      (click)="onIncreaseClick($event)"
+    >
+      +
+    </button>
+    <button
+      [disabled]="this.product.isLoading"
+      class="card__buttons--button-red"
+      (click)="onDecreaseClick($event)"
+    >
+      -
+    </button>
+  </div>
 </div>

@@ -1,12 +1,12 @@
 .card {
   border-radius: 1em;
+  position: relative;
   padding: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #e8e8e8;
-  overflow: hidden;
   transition: all 0.3s ease-in-out;
   &:hover {
     transform: translateY(-10px);
@@ -24,5 +24,31 @@
   }
   &__quantity {
     font-size: 0.9em;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+
+    &--button-red,
+    &--button-green {
+      padding: 0.5em 1em;
+      border: none;
+      border-radius: 0.5em;
+      font-size: 1.3em;
+      font-weight: bold;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+    &--button-red {
+      background-color: rgb(241, 66, 66);
+    }
+    &--button-green {
+      background-color: var(--c-primary);
+    }
   }
 }
