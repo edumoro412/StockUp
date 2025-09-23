@@ -17,6 +17,7 @@ export class Product {
   showModal: boolean = false;
   quantity: number = 1;
   isLoading: boolean = false;
+  contains: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private supabase: SupabaseService
@@ -33,6 +34,10 @@ export class Product {
         this.productInfo = data.product;
       } else {
         this.productInfo = null;
+      }
+
+      if (code) {
+        this.contains = await this.supabase.contains(code);
       }
     } catch (err) {
       console.error('Error al cargar el producto', err);

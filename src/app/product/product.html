@@ -47,7 +47,7 @@
     </ul>
   </div>
   <button (click)="openModal()" class="container-product__button">
-    Añadir a la despensa
+    {{this.contains ? 'Añadir más' : 'Añadir a la despensa'}}
   </button>
   } @if (showModal) {
   <div class="modal">
