@@ -102,7 +102,7 @@ export class SupabaseService {
       .from('pantry')
       .select('*')
       .eq('user_id', userId)
-      .order('quantity', { ascending: false });
+      .order('quantity');
 
     if (error) {
       console.log('Error fetching products', error);
