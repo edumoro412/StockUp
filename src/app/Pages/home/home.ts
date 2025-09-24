@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Header } from '../../layouts/header/header';
 import { SupabaseService } from '../../services/supabase.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [Header],
+  imports: [RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
 export class Home implements OnInit {
-  name: string = 'Usuario';
+  name: string | undefined = undefined;
 
   constructor(private supabaseService: SupabaseService) {}
   ngOnInit(): void {

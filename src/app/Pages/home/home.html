@@ -1,3 +1,62 @@
-<h1>Bienvenido {{name}}!</h1>
+@if(name){
 
-<h2>Tu despensa:</h2>
+<div class="home">
+  <header class="home__header">
+    <h1 class="home__title">
+      Bienvenido <span class="home__name">{{ name }}</span>!
+    </h1>
+    <p class="home__subtitle">
+      Administra tus despensas y controla los detalles de tus alimentos con
+      facilidad.
+    </p>
+  </header>
+
+  <section class="home__intro">
+    <div class="intro__card">
+      <h2>📦 Gestiona tus despensas</h2>
+      <p>Crea, organiza y consulta todas tus despensas en un solo lugar.</p>
+    </div>
+    <div class="intro__card">
+      <h2>🥫 Control de alimentos</h2>
+      <p>
+        Revisa información detallada de cada alimento y mantén el control de tu
+        stock.
+      </p>
+    </div>
+    <div class="intro__card">
+      <h2>🔍 Escanea códigos de barras</h2>
+      <p>
+        Escanea el código de barras de un producto y obtén toda su información
+        al instante.
+      </p>
+    </div>
+  </section>
+
+  <section class="home__features">
+    <h2>✨ ¿Por qué usar StockUp?</h2>
+    <ul class="home__features--list">
+      <li>✔️ Rápido y fácil de usar</li>
+      <li>✔️ Toda tu despensa organizada</li>
+      <li>✔️ Accede desde cualquier dispositivo</li>
+    </ul>
+  </section>
+
+  <section class="home__testimonial">
+    <blockquote>
+      "Desde que uso StockUp ya no pierdo tiempo buscando qué me falta en casa.
+      ¡Es una pasada!"
+    </blockquote>
+    <cite>- Usuario feliz</cite>
+  </section>
+
+  <section class="home__cta">
+    <button class="btn btn--primary" [routerLink]="'/scanner'">
+      Empieza ahora
+    </button>
+  </section>
+</div>
+}@else{
+<div class="loading">
+  <img src="/gifs/egg.gif" alt="Loading" />
+</div>
+}

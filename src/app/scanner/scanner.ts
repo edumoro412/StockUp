@@ -3,12 +3,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Html5Qrcode } from 'html5-qrcode';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Header } from '../layouts/header/header';
 
 @Component({
   selector: 'app-scanner',
   standalone: true,
-  imports: [ReactiveFormsModule, Header],
+  imports: [ReactiveFormsModule],
   templateUrl: './scanner.html',
   styleUrl: './scanner.scss',
 })
