@@ -1,7 +1,10 @@
 .pantry-container {
   &__title {
     text-align: center;
-    font-size: 2.2em;
+    margin: 1em 0;
+    &-green {
+      color: var(--c-primary);
+    }
   }
   &__products {
     padding: 1em;
