@@ -39,23 +39,24 @@ export class Scanner {
   async startScanner(): Promise<void> {
     const config = {
       fps: 10,
-      qrbox: {
-        width: 250,
-        height: 250,
-      },
+      qrbox: { width: 250, height: 250 },
     };
 
     this.html5QrCode = new Html5Qrcode('scanner');
-    this.html5QrCode
+
+    await this.html5QrCode
       .start(
         { facingMode: 'environment' },
         config,
-        (decodeText) => {
+        async (decodeText) => {
           console.log('Código escaneado:', decodeText);
-          const code = this.fetchProduct(decodeText);
-          if (code) {
+
+          const product = await this.fetchProduct(decodeText);
+
+          if (product) {
             this.html5QrCode.stop();
-            this.router.navigate(['/product', code]);
+
+            this.router.navigate(['/product', decodeText]);
           } else {
             this.error = 'Producto no encontrado';
           }
