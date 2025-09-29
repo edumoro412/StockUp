@@ -3,20 +3,28 @@ import { OnInit } from '@angular/core';
 import { SupabaseService } from '../services/supabase.service';
 import { ProductCard } from '../component/product-card/product-card';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-pantry',
-  imports: [ProductCard, CommonModule],
+  imports: [ProductCard, CommonModule, RouterLink],
   templateUrl: './pantry.html',
   styleUrl: './pantry.scss',
 })
 export class Pantry implements OnInit {
   data: PantryProductType[] = [];
+  loading: boolean = false;
 
   constructor(private supabase: SupabaseService) {}
   async ngOnInit(): Promise<void> {
-    this.data = await this.supabase.getProductsOfCurrentUser();
-    console.log(this.data);
+    try {
+      this.loading = true;
+      this.data = await this.supabase.getProductsOfCurrentUser();
+    } catch (err) {
+      console.log('Hubo un error al cargar la despensa', err);
+    } finally {
+      this.loading = false;
+    }
   }
 
   async increaseQuantity(product: PantryProductType) {
