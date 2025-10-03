@@ -42,3 +42,13 @@ header {
 .header a.active {
   color: #fff;
 }
+
+@media (max-width: 768px) {
+  .header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+  }
+}
