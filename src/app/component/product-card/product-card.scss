@@ -52,3 +52,11 @@
     }
   }
 }
+
+@media (max-width: 48rem) {
+  .card {
+    &__img {
+      height: 10em;
+    }
+  }
+}

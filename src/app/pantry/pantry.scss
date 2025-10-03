@@ -13,3 +13,44 @@
     gap: 2em;
   }
 }
+
+.noproducts {
+  height: 80dvh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  &__title {
+    color: rgb(236, 23, 23);
+  }
+  &__button {
+    padding: 0.5em 1.5em;
+    border: none;
+    border-radius: 1em;
+    background-color: var(--c-primary);
+    font-weight: bold;
+    font-size: 1em;
+    color: white;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px black;
+    }
+  }
+}
+
+.loading-container {
+  height: 80dvh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 48rem) {
+  .pantry-container {
+    &__products {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}

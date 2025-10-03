@@ -7,7 +7,7 @@
       class="container-spinner__spinner"
     />
   </div>
-  } @if(this.productInfo){
+  } @else if(this.productInfo){
   <h1 class="container-product__title">
     {{ productInfo.product_name == "" ? productInfo.brands :
     productInfo.product_name}}

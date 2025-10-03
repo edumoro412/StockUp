@@ -1,13 +1,30 @@
+@if(this.loading){
+<div class="loading-container">
+  <img src="/gifs/egg.gif" alt="Loading" />
+</div>
+}@else{
+
 <div class="pantry-container">
   <h1 class="pantry-container__title">
     Tus <span class="pantry-container__title-green">productos</span>:
   </h1>
   <section class="pantry-container__products">
+    @if(data.length<=0){
+    <section class="noproducts">
+      <h2 class="noproducts__title">
+        ¡Todavía no tienes productos en la despensa!
+      </h2>
+      <button class="noproducts__button" [routerLink]="'/scanner'">
+        Añade produtos a la despensa
+      </button>
+    </section>
+    } @for (item of data; track $index) {
     <app-product-card
-      *ngFor="let item of data"
       [product]="item"
       (increase)="increaseQuantity($event)"
       (decrease)="decreaseButton($event)"
     ></app-product-card>
+    }
   </section>
 </div>
+}
