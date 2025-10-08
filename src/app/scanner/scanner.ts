@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Html5Qrcode } from 'html5-qrcode';
+import { Html5Qrcode, Html5QrcodeSupportedFormats } from 'html5-qrcode';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -40,6 +40,10 @@ export class Scanner {
     const config = {
       fps: 10,
       qrbox: { width: 250, height: 250 },
+      formatsToSupport: [
+        Html5QrcodeSupportedFormats.CODE_128,
+        Html5QrcodeSupportedFormats.EAN_13,
+      ],
     };
 
     this.html5QrCode = new Html5Qrcode('scanner');
@@ -61,9 +65,7 @@ export class Scanner {
             this.error = 'Producto no encontrado';
           }
         },
-        (errorMessage) => {
-          console.warn('Error al escanear: ', errorMessage);
-        }
+        (errorMessage) => {}
       )
       .catch((err) => console.log('Error al iniciar escáner:', err));
   }
