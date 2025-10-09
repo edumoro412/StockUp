@@ -24,8 +24,8 @@ export class SupabaseService {
     surnames: string
   ) {
     const { data, error } = await this.supabase.auth.signUp({
-      email: email,
-      password: password,
+      email,
+      password,
       options: {
         emailRedirectTo: 'https://stock-up-green.vercel.app/login',
         data: {
@@ -36,23 +36,14 @@ export class SupabaseService {
     });
 
     if (error) {
-      return { error };
+      console.log(error, 'Error creando el usuario');
+      return {
+        success: false,
+        error: error.message ?? 'Error creando el usuario',
+      };
     }
 
-    if (data.user) {
-      const { error: insertError } = await this.supabase.from('users').insert({
-        email: email,
-        name: name,
-        surnames: surnames,
-        auth_id: data.user.id,
-      });
-
-      if (insertError) {
-        return { error: insertError };
-      }
-      return { success: true };
-    }
-    return { error: new Error('No se pudo crear el usuario') };
+    return { user: data.user, success: true };
   }
 
   async Login(email: string, password: string) {
@@ -131,12 +122,6 @@ export class SupabaseService {
     }
   }
   //ESTO LO TENGO QUE REVISAR PORQUE NO FUNCIONA
-  resendConfirmation(email: string) {
-    return this.supabase.auth.resend({
-      type: 'signup',
-      email,
-    });
-  }
 
   async signOut() {
     const { error } = await this.supabase.auth.signOut();
