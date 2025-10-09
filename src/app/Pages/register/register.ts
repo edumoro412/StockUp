@@ -44,17 +44,17 @@ export class Register {
     const { email, password, name, surnames } = this.form.value;
 
     try {
-      const { error } = await this.supabaseService.createUser(
+      const result = await this.supabaseService.createUser(
         email,
         password,
         name,
         surnames
       );
-      if (error) {
-        if (error.message.includes('duplicate key value')) {
+      if (!result.success) {
+        if (result.error?.includes('duplicate key value')) {
           this.error = 'El email ya está en uso. Intenta con otro.';
         } else {
-          this.error = 'No se pudo registrar el usuario ' + error.message;
+          this.error = 'No se pudo registrar el usuario ' + result.error;
         }
         this.success = false;
         return;
