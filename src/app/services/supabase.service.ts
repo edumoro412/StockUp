@@ -3,6 +3,7 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { ProductCard } from '../component/product-card/product-card';
+import { User } from '../user/user';
 
 @Injectable({
   providedIn: 'root',
@@ -236,6 +237,72 @@ export class SupabaseService {
       }
     } else {
       return;
+    }
+  }
+
+  async isInFavorites(product_id: string): Promise<boolean> {
+    if (product_id) {
+      const user_id = await this.getUserId();
+      if (user_id) {
+        const { data, error } = await this.supabase
+          .from('favorites')
+          .select('*')
+          .eq('user_id', user_id)
+          .eq('product_id', product_id);
+
+        if (error || data.length < 1) {
+          return false;
+        }
+        return true;
+      }
+    }
+    return false;
+  }
+
+  async toggleFavorites(
+    product_id: string,
+    isFavorite: boolean
+  ): Promise<boolean> {
+    const user_id = await this.getUserId();
+    if (!user_id) throw new Error('Usuario no logueado');
+
+    if (isFavorite) {
+      const { data, error } = await this.supabase
+        .from('favorites')
+        .delete()
+        .eq('user_id', user_id)
+        .eq('product_id', product_id)
+        .select();
+
+      if (error) {
+        console.error('Error al eliminar de favoritos:', error);
+        return isFavorite;
+      }
+
+      return false;
+    } else {
+      const productInfo = await this.fetchProduct(product_id);
+      if (!productInfo) {
+        console.error('No se pudo obtener el producto para favoritos');
+        return isFavorite;
+      }
+
+      const { error } = await this.supabase
+        .from('favorites')
+        .insert({
+          user_id: user_id,
+          product_id: productInfo.code,
+          product_name: productInfo.product_name,
+          product_img: productInfo.image_url,
+        })
+        .select();
+
+      if (error) {
+        console.error('Error al insertar en favoritos:', error);
+        return false;
+      }
+
+      return true;
     }
   }
 }
