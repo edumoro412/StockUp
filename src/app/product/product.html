@@ -46,9 +46,18 @@
       }
     </ul>
   </div>
-  <button (click)="openModal()" class="container-product__button">
-    {{this.contains ? 'Añadir más' : 'Añadir a la despensa'}}
-  </button>
+  <div class="container-product__buttons">
+    <button (click)="openModal()" class="container-product__buttons--button">
+      {{this.contains ? 'Añadir más' : 'Añadir a la despensa'}}
+    </button>
+    <button
+      (click)="toggleFavorite()"
+      [ngClass]="{'container-product__buttons--button-favorite' : isFavorite, 'container-product__buttons--button-no-favorite' : !isFavorite}"
+      [disabled]="isLoading"
+    >
+      {{this.isFavorite ? 'Eliminar de favoritos' : 'Añadir a favoritos'}}
+    </button>
+  </div>
   } @if (showModal) {
   <div class="modal">
     <h2 class="modal__title">¿Cuántas unidades quieres añadir?</h2>
