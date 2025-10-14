@@ -35,41 +35,14 @@
   &__buttons {
     &--button {
       margin: 2em;
-      background-color: var(--c-primary);
-      color: white;
-      border: none;
-      padding: 0.5em 1em;
-      border-radius: 0.5em;
-      font-size: 1em;
-      transition: transform 0.3s ease-in-out;
-      &:hover {
-        transform: scale(1.1);
-      }
 
       &-no-favorite {
         background-color: #ffd700;
-        margin: 2em;
-        border: none;
-        padding: 0.5em 1em;
-        border-radius: 0.5em;
-        font-size: 1em;
-        transition: transform 0.3s ease-in-out;
-        &:hover {
-          transform: scale(1.1);
-        }
+        color: black;
       }
       &-favorite {
         background-color: red;
-        color: white;
         margin: 2em;
-        border: none;
-        padding: 0.5em 1em;
-        border-radius: 0.5em;
-        font-size: 1em;
-        transition: transform 0.3s ease-in-out;
-        &:hover {
-          transform: scale(1.1);
-        }
       }
     }
   }

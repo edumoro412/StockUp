@@ -42,15 +42,11 @@
 .button {
   background-color: var(--c-primary);
   padding: 1em 2em;
-  border: none;
   border-radius: 1em;
-  color: white;
   transition: all 0.5s ease-in-out;
-  width: 40%;
-  font-weight: bold;
 
   &:hover {
-    scale: (1.1);
+    scale: (1.015);
     background-color: #109223;
   }
 }

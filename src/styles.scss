@@ -47,3 +47,17 @@ h1 {
   font-weight: 700;
   margin: 0;
 }
+
+button {
+  background-color: var(--c-primary);
+  color: white;
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  font-size: 1em;
+  font-weight: bold;
+  transition: transform 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
