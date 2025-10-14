@@ -1,0 +1,9 @@
+.favorites-container {
+  padding: 1em;
+  &__title {
+    text-align: center;
+    &-green {
+      color: var(--c-primary);
+    }
+  }
+}
