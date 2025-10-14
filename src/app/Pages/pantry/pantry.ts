@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { SupabaseService } from '../services/supabase.service';
-import { ProductCard } from '../component/product-card/product-card';
+import { SupabaseService } from '../../services/supabase.service';
+import { ProductCard } from '../../component/product-card/product-card';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
