@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from './layouts/header/header';
-import { Scanner } from './scanner/scanner';
+import { Scanner } from './Pages/scanner/scanner';
 
 @Component({
   selector: 'app-root',
