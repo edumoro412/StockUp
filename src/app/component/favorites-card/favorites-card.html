@@ -1,0 +1,27 @@
+@if(this.loading){
+<div class="loading">
+  <img src="/gifs/egg.gif" alt="Loading..." />
+</div>
+}@else{
+<div class="container">
+  @if (!this.data) {
+  <h2 class="container__no-products">
+    !No tienes productos favoritos todavia!
+  </h2>
+  }@else {
+  <div class="container__cards">
+    @for(product of data;track product.id){
+    <div class="container__cards--card" (click)="goDetails(product.product_id)">
+      <h3 class="container__cards--card-title">{{product.product_name}}</h3>
+      <img
+        class="container__cards--card-img"
+        [src]="product.product_img"
+        alt="Imagen del producto"
+      />
+    </div>
+    }
+  </div>
+  }
+</div>
+
+}

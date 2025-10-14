@@ -3,6 +3,7 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { ProductCard } from '../component/product-card/product-card';
+import { User } from '../user/user';
 
 @Injectable({
   providedIn: 'root',
@@ -121,7 +122,6 @@ export class SupabaseService {
       return user.id;
     }
   }
-  //ESTO LO TENGO QUE REVISAR PORQUE NO FUNCIONA
 
   async signOut() {
     const { error } = await this.supabase.auth.signOut();
@@ -236,6 +236,106 @@ export class SupabaseService {
       }
     } else {
       return;
+    }
+  }
+
+  async isInFavorites(product_id: string): Promise<boolean> {
+    if (product_id) {
+      const user_id = await this.getUserId();
+      if (user_id) {
+        const { data, error } = await this.supabase
+          .from('favorites')
+          .select('*')
+          .eq('user_id', user_id)
+          .eq('product_id', product_id);
+
+        if (error || data.length < 1) {
+          return false;
+        }
+        return true;
+      }
+    }
+    return false;
+  }
+
+  async toggleFavorites(
+    product_id: string,
+    isFavorite: boolean
+  ): Promise<boolean> {
+    const user_id = await this.getUserId();
+    if (!user_id) throw new Error('Usuario no logueado');
+
+    if (isFavorite) {
+      const { data, error } = await this.supabase
+        .from('favorites')
+        .delete()
+        .eq('user_id', user_id)
+        .eq('product_id', product_id)
+        .select();
+
+      if (error) {
+        console.error('Error al eliminar de favoritos:', error);
+        return isFavorite;
+      }
+
+      return false;
+    } else {
+      const productInfo = await this.fetchProduct(product_id);
+      if (!productInfo) {
+        console.error('No se pudo obtener el producto para favoritos');
+        return isFavorite;
+      }
+
+      console.log(productInfo, '====Product');
+
+      const { error } = await this.supabase
+        .from('favorites')
+        .insert({
+          user_id: user_id,
+          product_id: productInfo.code,
+          product_name:
+            productInfo.product_name?.trim() ||
+            productInfo.brands?.trim() ||
+            'Nombre desconocido',
+
+          product_img: productInfo.image_url,
+        })
+        .select();
+
+      if (error) {
+        console.error('Error al insertar en favoritos:', error);
+        return false;
+      }
+
+      return true;
+    }
+  }
+
+  async getFavorites(): Promise<{
+    success: boolean;
+    data: FavoritesProductType[] | null;
+    error?: string | undefined;
+  }> {
+    const user_id = await this.getUserId();
+    if (user_id) {
+      const { error, data } = await this.supabase
+        .from('favorites')
+        .select('*')
+        .eq('user_id', user_id)
+        .order('product_name', { ascending: true });
+
+      if (error) {
+        return { success: false, data: null, error: error.message };
+      }
+
+      if (data && data.length > 0) {
+        console.log('==========', data);
+        return { success: true, data: data };
+      } else {
+        return { success: false, data: null };
+      }
+    } else {
+      return { success: false, data: null };
     }
   }
 }

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { Header } from '../layouts/header/header';
 import { ActivatedRoute } from '@angular/router';
 import { KJtoCal } from '../services/pipe';
 import { SupabaseService } from '../services/supabase.service';
 import { FormsModule } from '@angular/forms';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-product',
-  imports: [KJtoCal, FormsModule],
+  imports: [KJtoCal, FormsModule, NgClass],
   templateUrl: './product.html',
   styleUrl: './product.scss',
 })
@@ -18,6 +18,7 @@ export class Product {
   quantity: number = 1;
   isLoading: boolean = false;
   contains: boolean = false;
+  isFavorite: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private supabase: SupabaseService
@@ -38,6 +39,7 @@ export class Product {
 
       if (code) {
         this.contains = await this.supabase.contains(code);
+        this.isFavorite = await this.supabase.isInFavorites(code);
       }
     } catch (err) {
       console.error('Error al cargar el producto', err);
@@ -65,6 +67,23 @@ export class Product {
       this.closeModal();
     } catch (e) {
       console.log('erroe en el addTiPantry', e);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  async toggleFavorite() {
+    if (!this.productInfo) return;
+
+    try {
+      this.isLoading = true;
+      const result = await this.supabase.toggleFavorites(
+        this.productInfo.code,
+        this.isFavorite
+      );
+      this.isFavorite = result;
+    } catch (err) {
+      console.error('Error en toggleFavorite():', err);
     } finally {
       this.isLoading = false;
     }

@@ -35,3 +35,11 @@ type PantryProductType = {
   image_url: string;
   isLoading?: boolean;
 };
+
+type FavoritesProductType = Omit<
+  PantryProductType,
+  'quantity' & 'image_url'
+> & {
+  brands: string;
+  product_img: string;
+};
