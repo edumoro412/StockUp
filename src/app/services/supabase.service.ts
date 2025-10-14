@@ -122,7 +122,6 @@ export class SupabaseService {
       return user.id;
     }
   }
-  //ESTO LO TENGO QUE REVISAR PORQUE NO FUNCIONA
 
   async signOut() {
     const { error } = await this.supabase.auth.signOut();
@@ -287,12 +286,18 @@ export class SupabaseService {
         return isFavorite;
       }
 
+      console.log(productInfo, '====Product');
+
       const { error } = await this.supabase
         .from('favorites')
         .insert({
           user_id: user_id,
           product_id: productInfo.code,
-          product_name: productInfo.product_name,
+          product_name:
+            productInfo.product_name?.trim() ||
+            productInfo.brands?.trim() ||
+            'Nombre desconocido',
+
           product_img: productInfo.image_url,
         })
         .select();
@@ -303,6 +308,34 @@ export class SupabaseService {
       }
 
       return true;
+    }
+  }
+
+  async getFavorites(): Promise<{
+    success: boolean;
+    data: FavoritesProductType[] | null;
+    error?: string | undefined;
+  }> {
+    const user_id = await this.getUserId();
+    if (user_id) {
+      const { error, data } = await this.supabase
+        .from('favorites')
+        .select('*')
+        .eq('user_id', user_id)
+        .order('product_name', { ascending: true });
+
+      if (error) {
+        return { success: false, data: null, error: error.message };
+      }
+
+      if (data && data.length > 0) {
+        console.log('==========', data);
+        return { success: true, data: data };
+      } else {
+        return { success: false, data: null };
+      }
+    } else {
+      return { success: false, data: null };
     }
   }
 }
