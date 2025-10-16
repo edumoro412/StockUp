@@ -1,7 +1,21 @@
+@if(this.loading){
+<div class="loading">
+  <img src="/gifs/egg.gif" alt="loading" />
+</div>
+}@else{
+
 <div class="favorites-container">
   <h1 class="favorites-container__title">
     Tus productos
     <span class="favorites-container__title-green">favoritos</span>:
   </h1>
-  <app-favorites-card></app-favorites-card>
+  <app-input-filter
+    [data]="this.data ?? []"
+    (filtered)="filterData($event)"
+  ></app-input-filter>
+  <app-favorites-card
+    [data]="this.filteredData"
+    (navigate)="goDetails($event)"
+  ></app-favorites-card>
 </div>
+}
