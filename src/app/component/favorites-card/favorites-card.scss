@@ -58,13 +58,6 @@
   }
 }
 
-.loading {
-  height: 80dvh;
-  width: 100dvw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 @media (max-width: 900px) {
   .container__cards {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
