@@ -2,17 +2,20 @@ import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { ProductCard } from '../../component/product-card/product-card';
-import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { InputFilter } from '../../component/input-filter/input-filter';
 @Component({
   selector: 'app-pantry',
-  imports: [ProductCard, CommonModule, RouterLink],
+  imports: [ProductCard, ReactiveFormsModule, RouterLink, InputFilter],
   templateUrl: './pantry.html',
   styleUrl: './pantry.scss',
 })
 export class Pantry implements OnInit {
   data: PantryProductType[] = [];
+  filteredData: PantryProductType[] = [];
+  searchControl = new FormControl('');
   loading: boolean = false;
 
   constructor(private supabase: SupabaseService) {}
@@ -20,6 +23,7 @@ export class Pantry implements OnInit {
     try {
       this.loading = true;
       this.data = await this.supabase.getProductsOfCurrentUser();
+      this.filteredData = [...this.data];
     } catch (err) {
       console.log('Hubo un error al cargar la despensa', err);
     } finally {
@@ -50,5 +54,9 @@ export class Pantry implements OnInit {
       this.data = this.data.filter((p) => p.product_id !== product.product_id);
     }
     product.isLoading = false;
+  }
+
+  onFiltered(filteredProducts: PantryProductType[]) {
+    this.filteredData = filteredProducts;
   }
 }

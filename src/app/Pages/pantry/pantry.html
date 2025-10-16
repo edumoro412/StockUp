@@ -8,17 +8,22 @@
   <h1 class="pantry-container__title">
     Tus <span class="pantry-container__title-green">productos</span>:
   </h1>
+  @if(data.length<=0){
+  <section class="noproducts">
+    <h2 class="noproducts__title">
+      ¡Todavía no tienes productos en la despensa!
+    </h2>
+    <button class="noproducts__button" [routerLink]="'/scanner'">
+      Añade produtos a la despensa
+    </button>
+  </section>
+  }@else{
+  <app-input-filter
+    [data]="this.data"
+    (filtered)="onFiltered($event)"
+  ></app-input-filter>
   <section class="pantry-container__products">
-    @if(data.length<=0){
-    <section class="noproducts">
-      <h2 class="noproducts__title">
-        ¡Todavía no tienes productos en la despensa!
-      </h2>
-      <button class="noproducts__button" [routerLink]="'/scanner'">
-        Añade produtos a la despensa
-      </button>
-    </section>
-    } @for (item of data; track $index) {
+    @for (item of filteredData; track $index) {
     <app-product-card
       [product]="item"
       (increase)="increaseQuantity($event)"
@@ -26,5 +31,6 @@
     ></app-product-card>
     }
   </section>
+  }
 </div>
 }

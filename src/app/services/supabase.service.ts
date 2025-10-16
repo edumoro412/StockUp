@@ -158,7 +158,6 @@ export class SupabaseService {
       }
 
       const productInfo = await this.fetchProduct(code);
-      console.log('=====Esto es productInfo', productInfo?.product_name);
       if (data == null) {
         await this.supabase.from('pantry').insert({
           user_id: userId,
