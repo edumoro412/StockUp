@@ -1,0 +1,11 @@
+.filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__input {
+    font-size: 1rem;
+    padding: 0.3em 0.6em;
+    border-radius: 0.5em;
+  }
+}
