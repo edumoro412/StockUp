@@ -15,8 +15,9 @@
 
   &__cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(10em, 25em));
     gap: 1em;
+    justify-content: space-around;
 
     &--card {
       display: flex;
