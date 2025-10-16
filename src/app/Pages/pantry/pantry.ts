@@ -5,9 +5,10 @@ import { ProductCard } from '../../component/product-card/product-card';
 import { RouterLink } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { InputFilter } from '../../component/input-filter/input-filter';
 @Component({
   selector: 'app-pantry',
-  imports: [ProductCard, ReactiveFormsModule, RouterLink],
+  imports: [ProductCard, ReactiveFormsModule, RouterLink, InputFilter],
   templateUrl: './pantry.html',
   styleUrl: './pantry.scss',
 })
@@ -23,16 +24,6 @@ export class Pantry implements OnInit {
       this.loading = true;
       this.data = await this.supabase.getProductsOfCurrentUser();
       this.filteredData = [...this.data];
-
-      this.searchControl.valueChanges
-        .pipe(debounceTime(300), distinctUntilChanged())
-        .subscribe((query) => {
-          this.filteredData = this.data.filter((p) =>
-            p.product_name
-              .toLowerCase()
-              .includes(query?.toLocaleLowerCase() || '')
-          );
-        });
     } catch (err) {
       console.log('Hubo un error al cargar la despensa', err);
     } finally {
@@ -63,5 +54,9 @@ export class Pantry implements OnInit {
       this.data = this.data.filter((p) => p.product_id !== product.product_id);
     }
     product.isLoading = false;
+  }
+
+  onFiltered(filteredProducts: PantryProductType[]) {
+    this.filteredData = filteredProducts;
   }
 }

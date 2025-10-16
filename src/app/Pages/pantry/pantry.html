@@ -18,15 +18,10 @@
     </button>
   </section>
   }@else{
-  <section class="filter">
-    <input
-      type="text"
-      [formControl]="searchControl"
-      class="filter__input"
-      placeholder="Buscar producto..."
-    />
-  </section>
-
+  <app-input-filter
+    [data]="this.data"
+    (filtered)="onFiltered($event)"
+  ></app-input-filter>
   <section class="pantry-container__products">
     @for (item of filteredData; track $index) {
     <app-product-card
