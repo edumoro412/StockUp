@@ -9,6 +9,7 @@ import { User } from './user/user';
 import { Pantry } from './Pages/pantry/pantry';
 import { MainLayout } from './layouts/main-layout/main-layout';
 import { Favorites } from './Pages/favorites/favorites';
+import { Footer } from './layouts/footer/footer';
 
 export const routes: Routes = [
   {

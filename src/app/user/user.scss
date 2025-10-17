@@ -1,4 +1,5 @@
 .user-container {
+  min-height: 85dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,7 +25,7 @@
 }
 
 .loading {
-  height: 80dvh;
+  height: 85dvh;
   width: 100dvw;
   display: flex;
   justify-content: center;
