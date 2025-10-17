@@ -1,5 +1,5 @@
 header {
-  height: 6em;
+  height: 15dvh;
   background-color: var(--c-primary);
   display: flex;
   justify-content: space-between;
@@ -8,10 +8,11 @@ header {
 
   .header__logo {
     height: 100%;
+    display: flex;
+    align-items: center;
 
     &--logo {
       height: 5em;
-      padding-top: 1em;
     }
 
     &--title {
