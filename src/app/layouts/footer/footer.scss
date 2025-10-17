@@ -1,0 +1,16 @@
+.footer {
+  height: 15dvh;
+  background-color: rgb(39, 35, 35);
+  display: flex;
+  padding: 1em;
+
+  &__img {
+    display: flex;
+    align-items: center;
+    &--img {
+      height: 6em;
+      width: 6em;
+      padding: 1em;
+    }
+  }
+}
