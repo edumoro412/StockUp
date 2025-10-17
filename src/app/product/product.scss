@@ -119,6 +119,9 @@
         font-size: 1em;
       }
     }
+    &__buttons {
+      display: flex;
+    }
   }
 
   .modal__actions {
